@@ -1,0 +1,7 @@
+{
+    "java.home": "",
+    "python.autoComplete.extraPaths": [
+    "./py_crs"
+    ],
+    "python.pythonPath": "C:\\Python39\\python.exe"
+}
