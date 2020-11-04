@@ -6,11 +6,22 @@ import PIL
 from PIL import ImageTk, Image
 import webbrowser
 import string
-
+from datetime import date
+import time
+import numpy as np 
+import matplotlib.pyplot as plt 
+from matplotlib.figure import Figure 
+from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg,  
+NavigationToolbar2Tk)
 
 url = 'try.html'
 acc = "    Login/Signup"
 userid = -1
+nextcase = 0
+casecounter = -1
+canvacloser = 0
+def home(root):
+    objhome = home_page(root)
 class PlaceholderEntry(ttk.Entry):
     def __init__(self, container, placeholder, *args, **kwargs):
         super().__init__(container, *args, style = "Placeholder.TEntry", **kwargs)
@@ -144,8 +155,8 @@ class srch_sttn:
             self.ps.place(x=20, y=45)
             self.add = tk.Label(self.frame_res, text=self.address, bg="#ede779", font=("Times New Roman", 12) )
             self.add.place(x=20, y=80)
-            self.contact = tk.Label(self.frame_res, text=self.res_dict["contact"], bg="#ede779", font=("Times New Roman", 12))
-            self.contact.place(x=20, y=105)
+            self.containeract = tk.Label(self.frame_res, text=self.res_dict["contact"], bg="#ede779", font=("Times New Roman", 12))
+            self.containeract.place(x=20, y=105)
             self.email = tk.Label(self.frame_res, text=self.res_dict["email"], bg="#ede779", font=("Times New Roman", 12) )
             self.email.place(x=20, y=130)
             self.designation  = tk.Label(self.frame_res, text=self.res_dict["des"], bg="#ede779", font=("Times New Roman", 12))
@@ -219,7 +230,6 @@ class pol_prof:
 
         self.address = self.res_dict["dist"] + ", " + self.res_dict["city"] + ", "  + self.res_dict["pc"]
         self.rootp = tk.Toplevel(root)
-        self.rootp = tk.Toplevel(root)
         self.rootp.title("Branch Status")
         self.rootp.geometry('1350x1000+0+0')
         self.rootp.iconbitmap('images/justice_logo.ico')
@@ -230,39 +240,188 @@ class pol_prof:
         self.lb_bg.place(x=0,y=0,relwidth=1,relheight=1)
         self.label3=tk.Label(self.rootp,text="Check Your Branch",font=("times new roman",40,"bold"),border=10,relief=tk.GROOVE,bg="yellow")
         self.label3.place(x=450,y=0)
-        self.cont = tk.Frame(self.rootp, bg="white", height=460, width=1000)
-        self.cont.place(x=200, y=200)
+        self.container = tk.Frame(self.rootp, bg="white", height=460, width=1000)
+        self.container.place(x=200, y=200)
         self.p =   ImageTk.PhotoImage(Image.open('images/police_badge.png')) 
-        self.plabel = tk.Label(self.cont, image=self.p, compound=tk.LEFT)
+        self.plabel = tk.Label(self.container, image=self.p, compound=tk.LEFT)
         self.plabel.place(x=-2, y=-2)
-        self.pname = tk.Label(self.cont, text=self.res_dict["sttn_name"], font=("times new roman",20), bg="white")
+        self.pname = tk.Label(self.container, text=self.res_dict["sttn_name"], font=("times new roman",20), bg="white")
         self.pname.place(x=635, y=10)
-        self.add = tk.Label(self.cont, text="Address: ", font=("times new roman",15, "bold"), bg="white")
+        self.add = tk.Label(self.container, text="Address: ", font=("times new roman",15, "bold"), bg="white")
         self.add.place(x=515, y=100)
-        self.padd = tk.Label(self.cont, text=self.address, font=("times new roman",15), bg="white")
+        self.padd = tk.Label(self.container, text=self.address, font=("times new roman",15), bg="white")
         self.padd.place(x=600, y=100)
-        self.state = tk.Label(self.cont, text="State: ", font=("times new roman",15, "bold"), bg="white")
+        self.state = tk.Label(self.container, text="State: ", font=("times new roman",15, "bold"), bg="white")
         self.state.place(x=515, y=160)
-        self.pstate = tk.Label(self.cont, text=self.res_dict["state"], font=("times new roman",15), bg="white")
+        self.pstate = tk.Label(self.container, text=self.res_dict["state"], font=("times new roman",15), bg="white")
         self.pstate.place(x=580, y=160)
-        self.jd = tk.Label(self.cont, text="Jurisdiction: ", font=("times new roman",15, "bold"), bg="white")
+        self.jd = tk.Label(self.container, text="Jurisdiction: ", font=("times new roman",15, "bold"), bg="white")
         self.jd.place(x=515, y=210)
-        self.pjd = tk.Label(self.cont, text=self.res_dict["jd"], font=("times new roman",12), bg="white")
+        self.pjd = tk.Label(self.container, text=self.res_dict["jd"], font=("times new roman",12), bg="white")
         self.pjd.place(x=625, y=213)
-        self.des = tk.Label(self.cont, text="Designation : ", font=("times new roman",15, "bold"), bg="white")
+        self.des = tk.Label(self.container, text="Designation : ", font=("times new roman",15, "bold"), bg="white")
         self.des.place(x=515, y=270)
-        self.pdes = tk.Label(self.cont, text=self.res_dict["des"], font=("times new roman",15), bg="white")
+        self.pdes = tk.Label(self.container, text=self.res_dict["des"], font=("times new roman",15), bg="white")
         self.pdes.place(x=650, y=270)
-        self.ctt = tk.Label(self.cont, text="Contact : ", font=("times new roman",15, "bold"), bg="white")
+        self.ctt = tk.Label(self.container, text="Contact : ", font=("times new roman",15, "bold"), bg="white")
         self.ctt.place(x=515, y=330)
-        self.pctt = tk.Label(self.cont, text=self.res_dict["contact"], font=("times new roman",15), bg="white")
+        self.pctt = tk.Label(self.container, text=self.res_dict["contact"], font=("times new roman",15), bg="white")
         self.pctt.place(x=610, y=330)
-        self.em = tk.Label(self.cont, text="Email Id : ", font=("times new roman",15, "bold"), bg="white")
+        self.em = tk.Label(self.container, text="Email Id : ", font=("times new roman",15, "bold"), bg="white")
         self.em.place(x=515, y=390)
-        self.pem = tk.Label(self.cont, text=self.res_dict["email"], font=("times new roman",15), bg="white")
+        self.pem = tk.Label(self.container, text=self.res_dict["email"], font=("times new roman",15), bg="white")
         self.pem.place(x=610, y=390)
-        self.vcrime = tk.Button(self.cont, text="View FIRs", bg="yellow")
+        self.vcrime = tk.Button(self.container, text="View FIRs", bg="yellow", command = lambda: self.vc(self.rootp))
         self.vcrime.place(x=900, y=390)
+    def vc(self, root):
+        root.destroy()
+        global nextcase
+        self.vcobj = viewCrimes(root, nextcase)
+class viewCrimes:
+    def __init__(self, root,nc):
+        global nextcase
+        global casecounter
+        t = time.localtime()
+        today = date.today()
+        stat = "pending"
+        self.mydb = mysql.connector.connect(host="localhost",user="root",password="Dreamers29",database="crime_report")
+        self.curs = self.mydb.cursor()
+        arr = []
+        temparr = []
+        crimes = {"id": -1,"name":"","address":"","category":"","location":"","time":t,"date":today,"contact": "","inc_des":"","sus_name":"","sus_des":"","rel":""}
+        self.curs.execute("SELECT * FROM complaints WHERE stat=%(stat)s", {"stat":stat})
+        self.res = self.curs.fetchall()
+        rows = len(self.res)
+        casecounter = rows
+        
+        for counter in range(0,rows):
+            temparr.append("")
+            (cr) = self.res[counter]
+            crimes["id"] = cr[0]
+            crimes["name"]= cr[2]
+            crimes["address"]= cr[5] + ", " + cr[4] + ", " + cr[7] + ", " + cr[6]
+            crimes["category"] = cr[8]
+            crimes["location"] = cr[9]
+            crimes["time"] = cr[10]
+            crimes["date"] = cr[11]
+            crimes["contact"] = cr[3]
+            crimes["inc_des"] = cr[13]
+            crimes["rel"] = cr[16]
+            crimes["sus_name"] = cr[12]
+            crimes["sus_des"] = cr[14]
+            temparr[counter] = crimes.copy()
+            arr.append(temparr[counter])  
+
+        self.rootv = tk.Toplevel()
+        self.rootv.title("View Crimes")
+        self.rootv.geometry('1350x1350+0+0')
+        self.rootv.iconbitmap('images/justice_logo.ico')
+
+        #self.rootv.configure(background = "grey")
+        self.bg_icon=tk.PhotoImage(file=r"images/check_bg.png")
+        self.lb_bg=tk.Label(self.rootv,image=self.bg_icon,)
+        self.lb_bg.place(x=0,y=0,relwidth=1,relheight=1)
+        self.label3=tk.Label(self.rootv,text="View Pending FIRs",font=("times new roman",40,"bold"),border=10,relief=tk.GROOVE,bg="yellow")
+        self.label3.place(x=500,y=0)
+        self.container = tk.Frame(self.rootv, bg="white", height=485, width=1200)
+        self.container.place(x=170, y=200)
+        self.p =   ImageTk.PhotoImage(Image.open('images/police_badge.png')) 
+        self.plabel = tk.Label(self.container, image=self.p, compound=tk.LEFT)
+        self.plabel.place(x=0, y=0)
+        self.cid = tk.Label(self.container, text=arr[nc]["id"], font=("times new roman",15), bg="white")
+        self.cid.place(x=775, y=10)
+        print(nc, "nextcase")
+        self.cname= tk.Label(self.container, text="Petitioner's Name: ", font=("times new roman",14, "bold"), bg="white")
+        self.cname.place(x=435, y=50)
+        self.cn = tk.Label(self.container, text=arr[nc]["name"], font=("times new roman",14), bg="white")
+        self.cn.place(x=590, y=50)
+        self.cctt = tk.Label(self.container, text="Contact: ", font=("times new roman",14, "bold"), bg="white")
+        self.cctt.place(x=435, y=90)
+        self.cc = tk.Label(self.container, text=arr[nc]["contact"], font=("times new roman",14), bg="white")
+        self.cc.place(x=515, y=90)
+        self.cadd = tk.Label(self.container, text="Address: ", font=("times new roman",14, "bold"), bg="white")
+        self.cadd.place(x=435, y=130)
+        self.ca = tk.Label(self.container, text=arr[nc]["address"], font=("times new roman",14), bg="white")
+        self.ca.place(x=515, y=130)
+        
+        self.jd = tk.Label(self.container, text="Category of Crime: ", font=("times new roman",14, "bold"), bg="white")
+        self.jd.place(x=435, y=170)
+        self.pjd = tk.Label(self.container, text=arr[nc]["category"], font=("times new roman",14), bg="white")
+        self.pjd.place(x=600, y=170)
+        self.cdt = tk.Label(self.container, text="Date & Time: ", font=("times new roman",14, "bold"), bg="white")
+        self.cdt.place(x=435, y=210)
+        self.cd = tk.Label(self.container, text=arr[nc]["date"], font=("times new roman",14), bg="white")
+        self.cd.place(x=555, y=210)
+        self.ct = tk.Label(self.container, text=arr[nc]["time"], font=("times new roman",13), bg="white")
+        self.ct.place(x=645, y=210)
+        self.cloc = tk.Label(self.container, text="Location of Crime : ", font=("times new roman",14, "bold"), bg="white")
+        self.cloc.place(x=435, y=250)
+        self.cl = tk.Label(self.container, text=arr[nc]["location"], font=("times new roman",14), bg="white")
+        self.cl.place(x=600, y=250)
+        self.cincdet = tk.Label(self.container, text="Incident details : ", font=("times new roman",14, "bold"), bg="white")
+        self.cincdet.place(x=435, y=290)
+        self.cinc = tk.Label(self.container, text=arr[nc]["inc_des"], font=("times new roman",12), bg="white", wraplength=550, justify=tk.LEFT)
+        self.cinc.place(x=580, y=291)
+        self.crel= tk.Label(self.container, text="Relation with the victim : ", font=("times new roman",14, "bold"), bg="white")
+        self.crel.place(x=435, y=350)
+        self.crv = tk.Label(self.container, text=arr[nc]["rel"], font=("times new roman",14), bg="white")
+        self.crv.place(x=630, y=350)
+        self.csusn= tk.Label(self.container, text="Suspect Name : ", font=("times new roman",14, "bold"), bg="white")
+        self.csusn.place(x=435, y=390)
+        self.csn = tk.Label(self.container, text=arr[nc]["sus_name"], font=("times new roman",14), bg="white")
+        self.csn.place(x=590, y=390)
+        self.csusdes = tk.Label(self.container, text="Suspect Description : ", font=("times new roman",14, "bold"), bg="white")
+        self.csusdes.place(x=435, y=420)
+        self.csd = tk.Label(self.container, text=arr[nc]["sus_des"], font=("times new roman",14), bg="white", wraplength=550, justify=tk.LEFT)
+        self.csd.place(x=610, y=420)
+        self.vcrime = tk.Button(self.container, text="<< Previous", bg="yellow", command=lambda: self.prevCase(self.rootv))
+        self.vcrime.place(x=900, y=430)
+        self.vcrime = tk.Button(self.container, text="Mark as completed", bg="yellow", command=lambda: self.mark(arr))
+        self.vcrime.place(x=980, y=430)
+        self.vcrime = tk.Button(self.container, text="Next >>", bg="yellow", command =lambda: self.nextCase(self.rootv))
+        self.vcrime.place(x=1100, y=430)
+        self.vc = root
+        container = tk.Frame(self.vc, bg="white", height=660, width=1000)
+        container.place(x=200, y=100)
+    def nextCase(self,root):
+        global nextcase
+        print(nextcase)
+        if nextcase<casecounter:
+            root.destroy()
+            nextcase = nextcase + 1
+            self.rootv.destroy
+            self.vcobj = viewCrimes(root, nextcase)
+        else:
+            messagebox.showerror("error","No more cases!")
+    def prevCase(self, root):
+        global nextcase 
+        if nextcase!=0:
+            root.destroy()
+            nextcase = nextcase - 1
+            self.prevc = viewCrimes(root, nextcase)
+        else:
+            messagebox.showerror("error","No more cases!")
+
+
+        
+    def mark(self, arr):
+        global nextcase
+        status = "completed"
+        casid = arr[nextcase]["id"] 
+        print(casid)
+        self.mydb = mysql.connector.connect(host="localhost",user="root",password="Dreamers29",database="crime_report")
+        self.curs = self.mydb.cursor()
+        caseinsert = """UPDATE complaints SET stat=%(status)s WHERE id=%(casid)s"""
+        self.curs.execute(caseinsert, {'status':status, 'casid': casid})
+        self.mydb.commit()
+
+
+        
+
+
+
+
+
 
 
 class complaint:
@@ -534,54 +693,54 @@ class reg_police:
         self.lb_bg.place(x=0,y=0,relwidth=1,relheight=1)
         self.label3=tk.Label(self.window,text="REGISTERATION PAGE",font=("times new roman",40,"bold"),border=10,relief=tk.GROOVE,bg="yellow")
         self.label3.place(x=356,y=0)
-        self.cont = tk.Frame(self.window, bg="white", height=400, width=800)
-        self.cont.place(x=400, y=200)
+        self.container = tk.Frame(self.window, bg="white", height=400, width=800)
+        self.container.place(x=400, y=200)
 
-        self.name = tk.Label(self.cont,text = "Name of Police Station", compound=tk.LEFT,bg="white",font=("times new roman",16))
+        self.name = tk.Label(self.container,text = "Name of Police Station", compound=tk.LEFT,bg="white",font=("times new roman",16))
         self.name.grid(row = 0,column = 0, padx=40,pady=10)
-        self.district = tk.Label(self.cont ,text = "District", compound=tk.LEFT,bg="white",font=("times new roman",16))
+        self.district = tk.Label(self.container ,text = "District", compound=tk.LEFT,bg="white",font=("times new roman",16))
         self.district.grid(row = 1,column = 0, padx=40,pady=10)
-        self.city = tk.Label(self.cont ,text = "City", compound=tk.LEFT,bg="white",font=("times new roman",16))
+        self.city = tk.Label(self.container ,text = "City", compound=tk.LEFT,bg="white",font=("times new roman",16))
         self.city.grid(row = 2,column = 0, padx=40,pady=10)
-        self.state = tk.Label(self.cont ,text = "State", compound=tk.LEFT,bg="white",font=("times new roman",16))
+        self.state = tk.Label(self.container ,text = "State", compound=tk.LEFT,bg="white",font=("times new roman",16))
         self.state.grid(row = 3,column = 0, padx=40,pady=10)
-        self.pc = tk.Label(self.cont ,text = "Pincode", compound=tk.LEFT,bg="white",font=("times new roman",16,))
+        self.pc = tk.Label(self.container ,text = "Pincode", compound=tk.LEFT,bg="white",font=("times new roman",16,))
         self.pc.grid(row = 4,column = 0, padx=40,pady=10)
-        self.jd = tk.Label(self.cont,text = "Jurisdiction", compound=tk.LEFT,bg="white",font=("times new roman",16))
+        self.jd = tk.Label(self.container,text = "Jurisdiction", compound=tk.LEFT,bg="white",font=("times new roman",16))
         self.jd.grid(row = 5,column = 0, padx=40,pady=10)
 
-        self.contact = tk.Label(self.cont, text="Phone no.", compound=tk.LEFT,bg="white",font=("times new roman",16))
-        self.contact.grid(row= 8, column = 0, padx=40,pady=10)
-        self.des = tk.Label(self.cont, text="Designation: ", compound=tk.LEFT,bg="white",font=("times new roman",16))
+        self.containeract = tk.Label(self.container, text="Phone no.", compound=tk.LEFT,bg="white",font=("times new roman",16))
+        self.containeract.grid(row= 8, column = 0, padx=40,pady=10)
+        self.des = tk.Label(self.container, text="Designation: ", compound=tk.LEFT,bg="white",font=("times new roman",16))
         self.des.grid(row=9, column=0, padx=40,pady=10)
-        self.email = tk.Label(self.cont, text="Email id", compound=tk.LEFT,bg="white",font=("times new roman",16))
+        self.email = tk.Label(self.container, text="Email id", compound=tk.LEFT,bg="white",font=("times new roman",16))
         self.email.grid(row=10, column=0, padx=40,pady=10)
 
 
 
-        self.name_in = tk.Entry(self.cont, textvariable=self.name_var, bd=5, relief=tk.GROOVE,)
+        self.name_in = tk.Entry(self.container, textvariable=self.name_var, bd=5, relief=tk.GROOVE,)
         self.name_in.grid(row = 0,column = 1,padx=20)
-        self.district_in = tk.Entry(self.cont, textvariable=self.dist_var, bd=5, relief=tk.GROOVE,)
+        self.district_in = tk.Entry(self.container, textvariable=self.dist_var, bd=5, relief=tk.GROOVE,)
         self.district_in.grid(row = 1,column = 1, padx=20)
-        self.city_in = tk.Entry(self.cont, textvariable=self.city_var, bd=5, relief=tk.GROOVE,)
+        self.city_in = tk.Entry(self.container, textvariable=self.city_var, bd=5, relief=tk.GROOVE,)
         self.city_in.grid(row = 2,column = 1, padx=20)
-        self.state_in=ttk.Combobox(self.cont,textvariable=self.state_var,font=("times new roman",13))
+        self.state_in=ttk.Combobox(self.container,textvariable=self.state_var,font=("times new roman",13))
 
         self.state_in['values']=('Select state','Andra Pradesh','Hyderabad', 'Amaravati','Arunachal Pradesh','Itangar','Assam','Dispur','Bihar','Patna','Chhattisgarh','Raipur','Goa','Panaji','Gujarat','Gandhinagar','Haryana','Chandigarh','Himachal Pradesh','Shimla','Jammu and Kashmir','Srinagar and Jammu','Jharkhand','Ranchi','Karnataka','Bangalore','Kerala','Thiruvananthapuram','Madya Pradesh','Bhopal','Maharashtra','Mumbai','Manipur','Imphal','Meghalaya','Shillong','Mizoraz','Aizawi','Nagaland','Kohima','Orissa','Bhubaneshwar','Punjab','Chandigarh','Rajasthan','Jaipur','Sikkim','Gangtok','Tamil Nadu','Chennai','Telagana','Hyderabad','Tripura','Agartala','Uttaranchal','Dehradun','Uttar Pradesh','Lucknow','West Bengal','Kolkata')
         self.state_in.grid(row=3, column=1, padx=20)
         self.state_in.current(0)
-        self.pc_in = tk.Entry(self.cont, textvariable=self.pc_var, bd=5, relief=tk.GROOVE,)
+        self.pc_in = tk.Entry(self.container, textvariable=self.pc_var, bd=5, relief=tk.GROOVE,)
         self.pc_in.grid(row = 4,column = 1, padx=20)
-        self.jd_in = tk.Entry(self.cont, textvariable=self.jd_var, bd=5, relief=tk.GROOVE,)
+        self.jd_in = tk.Entry(self.container, textvariable=self.jd_var, bd=5, relief=tk.GROOVE,)
         self.jd_in.grid(row = 5,column = 1, padx=20)
 
-        self.des_in = tk.Entry(self.cont, textvariable=self.des_var, bd=5, relief=tk.GROOVE,)
+        self.des_in = tk.Entry(self.container, textvariable=self.des_var, bd=5, relief=tk.GROOVE,)
         self.des_in.grid(row = 8,column = 1,padx=20)
-        self.ctt_in = tk.Entry(self.cont, textvariable=self.ctt_var, bd=5, relief=tk.GROOVE,)
+        self.ctt_in = tk.Entry(self.container, textvariable=self.ctt_var, bd=5, relief=tk.GROOVE,)
         self.ctt_in.grid(row = 9,column = 1, padx=20)
-        self.email_in = tk.Entry(self.cont, textvariable=self.email_var, bd=5, relief=tk.GROOVE,)
+        self.email_in = tk.Entry(self.container, textvariable=self.email_var, bd=5, relief=tk.GROOVE,)
         self.email_in.grid(row = 10,column = 1, padx=20)
-        self.btn = tk.Button(self.cont ,text="Submit", bg="white",fg="blue",font=("times new roman",14,"bold"), command=lambda:self.onSubmit())
+        self.btn = tk.Button(self.container ,text="Submit", bg="white",fg="blue",font=("times new roman",14,"bold"), command=lambda:self.onSubmit())
         self.btn.grid(row=11,column=1, pady=20)
 
     #function
@@ -627,7 +786,9 @@ class reg_police:
             'email_db':self.email_db
         })
         self.mydb.commit()
+        self.window.destroy()
         self.polobj = pol_prof(self.window)
+        
 
 
 
@@ -650,17 +811,19 @@ class chose:
         self.frame2.place(x=420,y=150)
         self.label3=tk.Label(self.rootc,text="REGISTERATION PAGE",font=("times new roman",40,"bold"),border=10,relief=tk.GROOVE,bg="yellow")
         self.label3.place(x=320,y=0)
-        self.cont = tk.Frame(self.rootc, bg="white", height=300, width=800)
-        self.cont.place(x=260, y=250)
-        self.userbtn = tk.Button(self.cont, text="Register as a User", height=2, width=30, bg="#f56042", font=("Times New Roman", 13, "bold"), command=lambda: self.userClicked(self.rootc) )
+        self.container = tk.Frame(self.rootc, bg="white", height=300, width=800)
+        self.container.place(x=260, y=250)
+        self.userbtn = tk.Button(self.container, text="Register as a User", height=2, width=30, bg="#f56042", font=("Times New Roman", 13, "bold"), command=lambda: self.userClicked(self.rootc) )
         self.userbtn.place(x=250, y=80)
-        self.branch = tk.Button(self.cont, text="Register your branch", height=2, width=30, bg="#f56042", font=("Times New Roman", 13, "bold"), command=lambda: self.polClicked(self.rootc) )
+        self.branch = tk.Button(self.container, text="Register your branch", height=2, width=30, bg="#f56042", font=("Times New Roman", 13, "bold"), command=lambda: self.polClicked(self.rootc) )
         self.branch.place(x=250, y=150)
     def userClicked(self, root):
+        root.destroy()
         global acc
         acc = "   Logout"
         self.home_again = home_page(root)
     def polClicked(self, root):
+        root.destroy()
         self.ref_pol = reg_police(root)
 
 
@@ -752,6 +915,7 @@ class login_page:
             global userid
             userid = z[0]
             print(userid)
+           
             self.choseobj = chose(root)
 
 
@@ -867,11 +1031,15 @@ class login_page:
                 uop = curs.fetchone()
                 if uop:
                     userid = cmpid
+                    
                     self.polobj = pol_prof(self.root1)
+                    self.root1.destroy()
                 else:
                     global acc
                     acc = "   Logout"
                     self.userobj = home_page(self.root1)
+                    self.root1.destroy()
+                
 
 
         if logbool==False:
@@ -929,7 +1097,7 @@ class home_page:
         self.root.config(menu=self.crs_menu)
         self.file_menu = tk.Menu(self.crs_menu)
         self.crs_menu.add_cascade(label="File",menu=self.file_menu)
-
+        self.file_menu.add_command(label="Go Back to Home", command=lambda: home(self.root))
         self.file_menu.add_separator()
         self.file_menu.add_command(label="Quit", command=self.root.quit)
 
@@ -978,13 +1146,47 @@ class home_page:
         self.crime_stats = tk.Label(self.frame_map, text="Crime Stats Of India", justify=tk.CENTER, fg="white", bg="#a86d32", font=("Times New Roman", 14, "bold"))
         self.crime_stats.place(x=195, y=15)
         self.map_img = ImageTk.PhotoImage(Image.open("images/map_crime.jpg"))
-        self.map_button = tk.Button(self.frame_map, image=self.map_img, compound='center', borderwidth=0, bg="#ede779", fg="#ede779", command=lambda aurl=url:OpenUrl(aurl))
+        self.map_button = tk.Button(self.frame_map, image=self.map_img, compound='center', borderwidth=0, bg="#ede779", fg="#ede779", command=lambda: self.plot(self.root))
         self.map_lbl = tk.Label(self.frame_map, image=self.map_img,justify = tk.CENTER, width=400, compound='center', bg="#ede779", fg="#ede779")
         self.map_button.place(x=50,y=40)
         CreateToolTip(self.map_button, text = 'Click to view detailed \n'' crime rate statistics of \n''India..')
         self.hover = tk.Label(self.frame_map, text="Click the map to view detailed statistics...", justify=tk.CENTER, fg="white", bg="#a86d32", font=("Times New Roman", 11))
         self.hover.place(x=275, y=505)
-
+    def plot(self, root):
+        self.stats = root
+        self.stats.geometry("400x400")
+        self.stats.title("Crime Statistics Statewise")
+        global canvacloser
+        canvacloser = canvacloser + 1
+       
+        states = ['Assam', 'Bihar','Delhi',  'Gujarat', 'Himachal Pradesh',  'Jharkhand', 'Karnataka', 'Kerala', 'Madhya Pradesh', 'Maharashtra', 'Odhisha', 'Punjab', 'Rajasthan', 'Tamil Nadu', 'Uttar Pradesh', 'West Bengal'] 
+  
+        data = [ 14590, 34277, 18765, 8623, 9922, 8514, 17868, 11490, 23593, 32574, 13990, 4938, 16439, 12692,  41889, 27798] 
+  
+  
+        explode = (0.1, 0.0, 0.2, 0.3, 0.0,  0.2, 0.0, 0.0, 0.0, 0.1, 0.0, 0.0, 0.0, 0.1, 0.2, 0.3) 
+        colors = ( "orange", "cyan", "brown", 
+          "grey", "indigo", "beige") 
+        wp = { 'linewidth' : 1, 'edgecolor' : "green" } 
+        fig, ax = plt.subplots(figsize =(10, 7)) 
+        wedges, texts, autotexts = ax.pie(data,  
+                                  autopct = lambda pct: self.func(pct, data), 
+                                  explode = explode,  
+                                  labels = states, 
+                                  shadow = True, 
+                                  colors = colors, 
+                                  startangle = 90, 
+                                  wedgeprops = wp, 
+                                  textprops = None) 
+        plt.setp(autotexts, size = 6)
+        canvas = FigureCanvasTkAgg(fig, master = self.stats)  
+        canvas.draw() 
+        canvas.get_tk_widget().pack() 
+        toolbar = NavigationToolbar2Tk(canvas,self.stats) 
+        toolbar.update() 
+  
+    # placing the toolbar on the Tkinter window 
+        canvas.get_tk_widget().pack()
     def openAcc(self, root):
         self.useracc = login_page(root)
 
@@ -992,6 +1194,11 @@ class home_page:
         self.usersrch = srch_sttn(root)
     def crimeReport(self, root):
         self.crimeobj = status(root)
+    def func(self, pct, allvalues): 
+
+        absolute = int(pct / 100.*np.sum(allvalues)) 
+        return "{:.1f}%\n({:d})".format(pct, absolute)
+
 
         
     
