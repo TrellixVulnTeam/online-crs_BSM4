@@ -44,6 +44,194 @@ def stAr(arr):
 #string comparison
 def comp(a, b):
     return [c for c in a if c.isalpha()] == [c for c in b if c.isalpha()]
+#complaint form
+class complaint_form:
+    def __init__(self, root):
+        self.rootcf = root
+
+        self.rootcf.title("Lodge Complaint")
+        self.rootcf.geometry("1450x900+0+0")
+
+        self.bg_icon = tk.PhotoImage(file=r"images/check_bg.png")
+        self.user_icon = tk.PhotoImage(file=r"images/logo.png")
+        self.name_icon = tk.PhotoImage(file=r"images/useracc.png")
+        self.passw_icon = tk.PhotoImage(file=r"images/pswd.png")
+        lb_bg = tk.Label(self.rootcf, image=self.bg_icon )
+        lb_bg.place(x=0, y=0, relwidth=1, relheight=1)
+        frame2=tk.Frame(self.rootcf,bg="white")
+        frame2.place(x=100,y=50)
+        #self.phone = tk.PhotoImage(file=r"C:\Users\HP\Downloads\phone.png")
+        #self.place = tk.PhotoImage(file=r"C:\Users\HP\Downloads\icons8-location-24.png")
+        self.mobile_no = tk.StringVar()
+        self.uname = tk.StringVar()
+        self.state = tk.StringVar()
+        self.district = tk.StringVar()
+        self.pc = tk.StringVar()
+        self.cat = tk.StringVar()
+        self.relation = tk.StringVar()
+        self.incdet=tk.StringVar()
+        self.incident=tk.StringVar()
+
+        tk.Label(frame2, text="Name:",  bg="white",
+              font=("times new roman", 15, "bold")).grid(row=1, column=0, )
+        tk.Entry(frame2, bd=5, relief=tk.GROOVE, textvariable=self.uname, font=("", 15)).grid(row=1, column=1)
+        tk.Label(frame2, text="Mobile no",  bg="white",
+              font=("times new roman", 15, "bold")).grid(row=2, column=0,padx=10)
+        tk.Entry(frame2, bd=5, relief=tk.GROOVE, textvariable=self.mobile_no, font=("", 15)).grid(row=2, column=1,
+                                                                                            padx=10)
+        tk.Label(frame2, text="State:", bg="white",
+              font=("times new roman", 15, "bold")).grid(row=3, column=0)
+        self.state = tk.StringVar()
+        choose_state = ttk.Combobox(frame2, text="**state**", textvariable=self.state, font=("times new roman", 15, "bold"))
+
+        choose_state['values'] = (
+        '**select state**', 'Andra Pradesh', 'Hyderabad', 'Amaravati', 'Arunachal Pradesh', 'Itangar', 'Assam',
+        'Dispur', 'Bihar', 'Patna', 'Chhattisgarh', 'Raipur', 'Goa', 'Panaji', 'Gujarat', 'Gandhinagar', 'Haryana',
+        'Chandigarh', 'Himachal Pradesh', 'Shimla', 'Jammu and Kashmir', 'Srinagar and Jammu', 'Jharkhand', 'Ranchi',
+        'Karnataka', 'Bangalore', 'Kerala', 'Thiruvananthapuram', 'Madya Pradesh', 'Bhopal', 'Maharashtra', 'Mumbai',
+        'Manipur', 'Imphal', 'Meghalaya', 'Shillong', 'Mizoraz', 'Aizawi', 'Nagaland', 'Kohima', 'Orissa',
+        'Bhubaneshwar', 'Punjab', 'Chandigarh', 'Rajasthan', 'Jaipur', 'Sikkim', 'Gangtok', 'Tamil Nadu', 'Chennai',
+        'Telagana', 'Hyderabad', 'Tripura', 'Agartala', 'Uttaranchal', 'Dehradun', 'Uttar Pradesh', 'Lucknow',
+        'West Bengal', 'Kolkata')
+        choose_state.grid(row=3, column=1, padx=40, pady=10)
+        choose_state.current(0)
+
+        l1 = tk.Label(frame2, text="District:",  bg="white", font=("times of roman", 15, "bold"))
+        l1.grid(row=4,column=0,padx=40,pady=10)
+        tk.Entry(frame2, textvariable=self.district,bd=5, relief=tk.GROOVE,font=("times new roman",15,"bold") ).grid(row=4, column=1, padx=20)
+        lpc = tk.Label(frame2, text="Pincode:",  bg="white", font=("times of roman", 15, "bold"))
+        lpc.grid(row=5,column=0,padx=40,pady=10)
+        tk.Entry(frame2, textvariable=self.pc,bd=5, relief=tk.GROOVE,font=("times new roman",15,"bold") ).grid(row=5, column=1, padx=20)
+        tk.Label(frame2, text="Category:", bg="white",
+              font=("times new roman", 15, "bold")).grid(row=6, column=0, padx=40, pady=20)
+        choose_state = ttk.Combobox(frame2, text="**state**", textvariable=self.cat, font=("times new roman", 15, "bold"))
+
+        choose_state['values'] = (
+        '**select category**', 'Property Crimes', 'Substance abuse', 'Violent Crime', 'Disorderly Conduct', 'Fraud', 'Theft',
+        'Monetary Crime', 'Offense to family', 'Rape/Assault', 'Other')
+        choose_state.grid(row=6, column=1, padx=20)
+        choose_state.current(0)
+        l3 = tk.Label(frame2, text="Relationship with the victim", bg="white",font=("times of roman", 15, "bold"))
+        l3.grid(row=7, column=0, padx=40, pady=20)
+        tk.Entry(frame2, bd=5, relief=tk.GROOVE, textvariable=self.relation,font=("times new roman", 15, "bold")).grid(row=7, column=1)
+        l4 = tk.Label(frame2, text="please provide any additional information about the incident: ", bg="white", font=("times of roman", 15, "bold"))
+        l4.grid(row=8, column=0, padx=40, pady=20)
+        tk.Entry(frame2, bd=5, relief=tk.GROOVE, textvariable=self.incident, font=("times new roman", 15, "bold")).grid(row=8,
+                                                                                                                  column=1)
+        self.uname = tk.StringVar()
+        self.pas = tk.StringVar()
+        self.cat = tk.StringVar()
+        self.time = tk.StringVar()
+        self.place = tk.StringVar()
+        tk.Label(frame2,text="Incident details:",font=("times new roman", 15, "bold"),
+                         bg="blue",fg="white").grid(row=9, column=0)
+
+        username = tk.Label(frame2, text="approximate timing and date of incident/recieving/viewing of content *",
+                         bg="white",
+                         font=("times new roman", 15, "bold"))
+        username.grid(row=10, column=0)
+        txtuser = tk.Entry(frame2, bd=5, relief=tk.GROOVE, textvariable=self.incdet, font=("", 15))
+        txtuser.grid(row=10, column=1)
+        userpass = tk.Label(frame2, text="where did the incident occur?", bg="white",
+                         font=("times new roman", 15, "bold"))
+        userpass.grid(row=11, column=0)
+        txtpass = tk.Entry(frame2, bd=5, relief=tk.GROOVE, textvariable=self.place, font=("", 15))
+        txtpass.grid(row=11, column=1, padx=10)
+        place=tk.Label(frame2,text="Place",bg="white",font=("times new roman",15,"bold"))
+        place.grid(row=12,column=0)
+        ent = tk.Entry(frame2, bd=3, relief=tk.GROOVE, textvariable=self.place, font=("", 15))
+        ent.grid(row=12, column=1)
+
+        self.susname = tk.StringVar()
+        self.cat = tk.StringVar()
+        self.susdet = tk.StringVar()
+        self.place = tk.StringVar()
+        sus=tk.Label(frame2, text="Please share the details of the suspect.Any information will be kept confidential amd may help during investigation", font=("times new roman", 15, "bold"),
+                         bg="light blue")
+        sus.grid(row=13, column=0)
+        category = tk.Label(frame2, text="suspect_name", font=("times new roman", 15, "bold"),
+                         bg="white")
+        category.grid(row=14, column=0)
+        catent = tk.Entry(frame2, bd=5, relief=tk.GROOVE, textvariable=self.susname, font=("", 15))
+        catent.grid(row=14, column=1)
+        username = tk.Label(frame2, text="suspect details:",
+                         bg="white",
+                         font=("times new roman", 15, "bold"))
+        username.grid(row=15, column=0)
+        txtuser = tk.Entry(frame2, bd=5, relief=tk.GROOVE, textvariable=self.susdet, font=("", 15))
+        txtuser.grid(row=15, column=1)
+        Btn=tk.Button(frame2,text="submit",bg="blue",font=("times new roman",20,"bold"),fg="white", command=lambda : self.lodge())
+        Btn.grid(row=16,columnspan=2)
+    def lodge(self):
+        self.status  ="pending"
+        dist = self.district.get()
+        self.name = self.uname.get()
+        self.contact = self.mobile_no.get()
+        self.sus_name = self.susname.get()
+        self.pc_db = self.pc.get()
+        self.loc = self.place.get()
+        self.inc_det = self.incdet.get()
+        self.sus_det = self.susdet.get()
+        self.category = self.cat.get()
+        self.stt = self.state.get()
+        self.rel = self.relation.get()
+        global userid
+        self.time = time.localtime()
+        self.date = date.today()
+        self.pid = -1
+        self.mydb = mysql.connector.connect(
+        host="localhost",
+        user="root",
+        password="Dreamers29",
+        database="crime_report")
+        self.curs = self.mydb.cursor()  
+        self.check2 = "SHOW TABLES LIKE 'complaints'"  
+        self.curs.execute(self.check2)
+        self.result1 = self.curs.fetchone()
+        if self.result1:
+            print("table for contact exists")
+        else:
+            print("table doesn't exist")      
+            self.curs.execute("CREATE TABLE complaints (id int AUTO_INCREMENT PRIMARY KEY, userid int, name VARCHAR(255), contact VARCHAR(255), city VARCHAR(255), district VARCHAR(255), pincode VARCHAR(66), state VARCHAR(255), category VARCHAR(255), location VARCHAR(255), time TIME, date DATE, suspect_name VARCHAR(255), inc_des VARCHAR(255), sus_des VARCHAR(255), stat VARCHAR(66), relvictim VARCHAR(255), pid INT)")
+        jd=""
+        self.num = -1
+        self.jdbool = False
+        self.curs.execute("SELECT * FROM stations")
+        self.res = self.curs.fetchall()
+        n = len(self.res)
+        for i in range(0, n):
+            (result) =self.res[i]
+            jd = stAr(result[7])
+            for c in jd:
+                if comp(dist, c):
+                    num = i
+                    print(num)
+                    self.jdbool = True
+                    print("found")
+                    break
+
+        if self.jdbool:
+            (psttn) = self.res[num]
+            self.pid = psttn[0]
+            self.inst= """INSERT INTO complaints (userid, name, contact, city, district, pincode, state, category, location, time, date, suspect_name, inc_des, sus_des, stat, relvictim, pid) 
+                           VALUES 
+                           (%(userid)s,%(name)s, %(contact)s, %(dist)s, %(dist)s, %(pc_db)s, %(stt)s, %(category)s, %(loc)s, %(time)s, %(date)s, %(sus_name)s, %(inc_det)s, %(sus_det)s, %(status)s, %(rel)s, %(pid)s) """
+            self.curs.execute(self.inst, {'userid':userid,'name':self.name, 'contact': self.contact, 'dist':dist, 'pc_db':self.pc_db, 'stt':self.stt, 'category':self.category, 'loc':self.loc, 'time':self.time, 'date': self.date, 'sus_name':self.sus_name, 'inc_det':self.inc_det, 'sus_det':self.sus_det, 'status':self.status, 'rel':self.rel, 'pid': self.pid})
+            self.mydb.commit()
+            self.curs.execute("SELECT * FROM complaints WHERE userid=%(userid)s AND time=%(time)s", {'userid':userid, 'time':self.time})
+            self.resagain = self.curs.fetchone()
+            self.complaint_id = str(self.resagain[0])
+            messagebox.showinfo("Submitted",  f"Note your complaint id {self.complaint_id}")
+            self.backhome = home_page(self.rootcf)
+        else:
+            self.inst= """INSERT INTO complaints (userid, name, contact, city, district, pincode, state, category, location, time, date, suspect_name, inc_des, sus_des, relvictim, pid) 
+                           VALUES 
+                           (%(userid)s,%(uname)s, %(mobile_no)s, %(district)s, %(district)s, %(pc)s, %(state)s, %(cat)s, %(place)s, %(time)s, %(date)s, %(susname)s, %(incdet)s, %(susdet)s, %(relation)s) """
+            self.curs.execute(self.inst, {'userid':userid,'uname':self.uname, 'mobile_no': self.mobile_no, 'district':self.district, 'pc':self.pc, 'state':self.state, 'cat':self.cat, 'place':self.place, 'time':self.time, 'date': self.date, 'susname':self.susname, 'incdet':self.incdet, 'susdet':self.susdet, 'relation':self.relation})
+            self.mydb.commit()
+
+
+
 
 #search sttn 
 class srch_sttn:
@@ -271,14 +459,14 @@ class pol_prof:
         self.em.place(x=515, y=390)
         self.pem = tk.Label(self.container, text=self.res_dict["email"], font=("times new roman",15), bg="white")
         self.pem.place(x=610, y=390)
-        self.vcrime = tk.Button(self.container, text="View FIRs", bg="yellow", command = lambda: self.vc(self.rootp))
+        self.vcrime = tk.Button(self.container, text="View FIRs", bg="yellow", command = lambda: self.vc(self.rootp,self.res_dict["pid"]))
         self.vcrime.place(x=900, y=390)
-    def vc(self, root):
+    def vc(self, root, pid):
         root.destroy()
         global nextcase
-        self.vcobj = viewCrimes(root, nextcase)
+        self.vcobj = viewCrimes(root, nextcase, pid)
 class viewCrimes:
-    def __init__(self, root,nc):
+    def __init__(self, root,nc, pid):
         global nextcase
         global casecounter
         t = time.localtime()
@@ -289,7 +477,7 @@ class viewCrimes:
         arr = []
         temparr = []
         crimes = {"id": -1,"name":"","address":"","category":"","location":"","time":t,"date":today,"contact": "","inc_des":"","sus_name":"","sus_des":"","rel":""}
-        self.curs.execute("SELECT * FROM complaints WHERE stat=%(stat)s", {"stat":stat})
+        self.curs.execute("SELECT * FROM complaints WHERE stat=%(stat)s and pid=%(pid)s", {"stat":stat, "pid":pid})
         self.res = self.curs.fetchall()
         rows = len(self.res)
         casecounter = rows
@@ -374,31 +562,31 @@ class viewCrimes:
         self.csusdes.place(x=435, y=420)
         self.csd = tk.Label(self.container, text=arr[nc]["sus_des"], font=("times new roman",14), bg="white", wraplength=550, justify=tk.LEFT)
         self.csd.place(x=610, y=420)
-        self.vcrime = tk.Button(self.container, text="<< Previous", bg="yellow", command=lambda: self.prevCase(self.rootv))
+        self.vcrime = tk.Button(self.container, text="<< Previous", bg="yellow", command=lambda: self.prevCase(self.rootv, pid))
         self.vcrime.place(x=900, y=430)
         self.vcrime = tk.Button(self.container, text="Mark as completed", bg="yellow", command=lambda: self.mark(arr))
         self.vcrime.place(x=980, y=430)
-        self.vcrime = tk.Button(self.container, text="Next >>", bg="yellow", command =lambda: self.nextCase(self.rootv))
+        self.vcrime = tk.Button(self.container, text="Next >>", bg="yellow", command =lambda: self.nextCase(self.rootv, pid))
         self.vcrime.place(x=1100, y=430)
         self.vc = root
         container = tk.Frame(self.vc, bg="white", height=660, width=1000)
         container.place(x=200, y=100)
-    def nextCase(self,root):
+    def nextCase(self,root, pid):
         global nextcase
         print(nextcase)
         if nextcase<casecounter:
             root.destroy()
             nextcase = nextcase + 1
             self.rootv.destroy
-            self.vcobj = viewCrimes(root, nextcase)
+            self.vcobj = viewCrimes(root, nextcase, pid)
         else:
             messagebox.showerror("error","No more cases!")
-    def prevCase(self, root):
+    def prevCase(self, root, pid):
         global nextcase 
         if nextcase!=0:
             root.destroy()
             nextcase = nextcase - 1
-            self.prevc = viewCrimes(root, nextcase)
+            self.prevc = viewCrimes(root, nextcase, pid)
         else:
             messagebox.showerror("error","No more cases!")
 
@@ -415,159 +603,6 @@ class viewCrimes:
         self.curs.execute(caseinsert, {'status':status, 'casid': casid})
         self.mydb.commit()
 
-
-        
-
-
-
-
-
-
-
-class complaint:
-    def __init__(self, root):
-        self.mydb = mysql.connector.connect(
-            host="localhost",
-            user="root",
-            password="Dreamers29",
-            database ="crime_report")
-        self.curs = self.mydb.cursor()
-        self.check1 = "SHOW TABLES LIKE 'complaints'"
-        self.curs.execute(self.check1)
-        self.result = self.curs.fetchone()
-        if self.result:
-            print("table exist")
-        else:
-            print("table doesn't exist")
-            self.curs.execute("CREATE TABLE complaints (id int AUTO_INCREMENT PRIMARY KEY, userid int, name VARCHAR(255), contact VARCHAR(255), city VARCHAR(255), district VARCHAR(255), pincode VARCHAR(66), state VARCHAR(255), category VARCHAR(255), location VARCHAR(255), time TIME, date DATE, suspect_name VARCHAR(255), inc_des VARCHAR(255), sus_des VARCHAR(255))")
-        self.root = root
-        self.root.title("Complaint")
-        self.root.geometry("1350x700+0+0")
-
-        self.bg_icon = tk.PhotoImage(file=r"images/check_bg.png")
-        self.user_icon = tk.PhotoImage(file=r"images/logo.png")
-        self.name_icon = tk.PhotoImage(file=r"images/usericon.png")
-        self.passw_icon = tk.PhotoImage(file=r"images/pass2.png")
-        lb_bg = tk.Label(self.root, image=self.bg_icon, )
-        lb_bg.place(x=0, y=0, relwidth=1, relheight=1)
-        Button1=tk.Button(self.root,text="Incident detail",bg="blue",activebackground="red",activeforeground="yellow",font=("times new roman",30,"bold"),command=self.login)
-        Button1.grid(row=0,column=0,columnspan=3)
-        Button2=tk.Button(self.root,text="suspect details:",bg="blue",activebackground="red",activeforeground="yellow",font=("times new roman",30,"bold"),command=self.suspect)
-        Button2.grid(row=0,column=4)
-        Button3=tk.Button(self.root,text="complaint details",bg="blue",activebackground="red",activeforeground="yellow",font=("times new roman",30,"bold"),command=self.form)
-        Button3.grid(row=0,column=5)
-    def form(self):
-        Frame2=tk.Frame(self.root,bg="white")
-        Frame2.place(x=400,y=150)
-        self.phone = tk.PhotoImage(file=r"images/phone.png")
-        self.place = tk.PhotoImage(file=r"images/icons8-location-24.png")
-        self.mobile_no = tk.StringVar()
-        self.uname = tk.StringVar()
-        self.state = tk.StringVar()
-        self.district = tk.StringVar()
-        self.police_station = tk.StringVar()
-        self.relation = tk.StringVar()
-        self.email_id=tk.StringVar()
-
-        tk.Label(Frame2, text="Name:", image=self.name_icon, compound=tk.LEFT, bg="white",
-              font=("times new roman", 20, "bold")).grid(row=1, column=0, padx=40, pady=20)
-        tk.Entry(Frame2, bd=5, relief=tk.GROOVE, textvariable=self.uname, font=("", 15)).grid(row=1, column=1,
-                                                                                        padx=20)
-        tk.Label(Frame2, text="Mobile no", image=self.phone, compound=tk.LEFT, bg="white",
-              font=("times new roman", 20, "bold")).grid(row=2, column=0, padx=40, pady=20)
-        tk.Entry(Frame2, bd=5, relief=tk.GROOVE, textvariable=self.mobile_no, font=("", 15)).grid(row=2, column=1,
-                                                                                            padx=20)
-        tk.Label(Frame2, text="State:", image=self.place, compound=tk.LEFT, bg="white",
-              font=("times new roman", 20, "bold")).grid(row=3, column=0, padx=40, pady=20)
-        state = tk.StringVar()
-        choose_state = ttk.Combobox(Frame2, text="**state**", textvariable=state, font=("times new roman", 20, "bold"))
-
-        choose_state['values'] = (
-        '**select select**', 'Andra Pradesh', 'Hyderabad', 'Amaravati', 'Arunachal Pradesh', 'Itangar', 'Assam',
-        'Dispur', 'Bihar', 'Patna', 'Chhattisgarh', 'Raipur', 'Goa', 'Panaji', 'Gujarat', 'Gandhinagar', 'Haryana',
-        'Chandigarh', 'Himachal Pradesh', 'Shimla', 'Jammu and Kashmir', 'Srinagar and Jammu', 'Jharkhand', 'Ranchi',
-        'Karnataka', 'Bangalore', 'Kerala', 'Thiruvananthapuram', 'Madya Pradesh', 'Bhopal', 'Maharashtra', 'Mumbai',
-        'Manipur', 'Imphal', 'Meghalaya', 'Shillong', 'Mizoraz', 'Aizawi', 'Nagaland', 'Kohima', 'Orissa',
-        'Bhubaneshwar', 'Punjab', 'Chandigarh', 'Rajasthan', 'Jaipur', 'Sikkim', 'Gangtok', 'Tamil Nadu', 'Chennai',
-        'Telagana', 'Hyderabad', 'Tripura', 'Agartala', 'Uttaranchal', 'Dehradun', 'Uttar Pradesh', 'Lucknow',
-        'West Bengal', 'Kolkata')
-        choose_state.grid(row=3, column=1, padx=40, pady=40)
-        choose_state.current(0)
-
-        l1 = tk.Label(Frame2, text="DISTRICT:", compound=tk.LEFT, bg="white", font=("times of roman", 20, "bold"))
-        l1.grid(row=4, column=0, padx=40,pady=20)
-        txt_district = tk.Entry(Frame2, textvariable=self.district,bd=5, relief=tk.GROOVE,font=("times new roman",20,"bold") )
-        txt_district.grid(row=4, column=1, padx=20)
-
-        l2 = tk.Label(Frame2, text="Police_station:",bg="white", font=("times of roman", 20, "bold"))
-        l2.grid(row=5, column=0, padx=40, pady=20)
-        ploice=tk.Entry(Frame2, textvariable=self.police_station,bd=5,relief=tk.GROOVE,font=("times new roman", 20, "bold"))
-        ploice.grid(row=5, column=1, padx=20)
-        l3 = tk.Label(Frame2, text="relationship with the victim", bg="white",font=("times of roman", 20, "bold"))
-        l3.grid(row=6, column=0, padx=40, pady=20)
-        text_incident =tk.Entry(Frame2, bd=5, relief=tk.GROOVE, textvariable=self.relation,
-                              font=("times new roman", 20, "bold"))
-        text_incident.grid(row=6, column=1, padx=20)
-        tk.Label(Frame2, text="email id", bg="white",font=("times new roman", 20, "bold")).grid(row=7, column=0, padx=40, pady=20)
-        tk.Entry(Frame2, bd=5, relief=tk.GROOVE, textvariable=self.email_id, font=("", 15)).grid(row=7, column=1,padx=20)
-
-
-
-
-    def login(self):
-
-        logoFrame = tk.Frame(self.root, bg="white", width=600, height=300)
-        logoFrame.place(x=200, y=150)
-        self.uname = tk.StringVar()
-        self.pas = tk.StringVar()
-        self.cat=tk.StringVar()
-        self.time=tk.StringVar()
-        self.place=tk.StringVar()
-        category=tk.Label(logoFrame,text="category of complaint*",font=("times new roman",20,"bold"),bg="white")
-        category.grid(row=1,column=0)
-        catent=tk.Entry(logoFrame, bd=5, relief=tk.GROOVE, textvariable=self.cat, font=("", 15))
-        catent.grid(row=1, column=1)
-        username = tk.Label(logoFrame, text="approximate timing and date of incident/recieving/viewing of content *", bg="white",
-                         font=("times new roman", 20, "bold"))
-        username.grid(row=2, column=0)
-        txtuser = tk.Entry(logoFrame, bd=5, relief=tk.GROOVE, textvariable=self.time, font=("", 15))
-        txtuser.grid(row=2, column=1)
-        userpass = tk.Label(logoFrame, text="where did the incident occur?", bg="white",font=("times new roman", 20, "bold"))
-        userpass.grid(row=3, column=0)
-        txtpass = tk.Entry(logoFrame, bd=5, relief=tk.GROOVE, textvariable=self.place, font=("", 15))
-        txtpass.grid(row=2, column=1,padx=10)
-        ent=tk.Entry(logoFrame,bd=3,relief=tk.GROOVE,textvariable=self.place,font=("",15))
-        ent.grid(row=3,column=1)
-
-        btn1 = tk.Button(logoFrame, text="submit", bg="blue", fg="white", font=("times new roman", 20, "bold"))
-        btn1.grid(row=5, columnspan=2, pady=20)
-    def suspect(self):
-        logoFrame = tk.Frame(self.root, bg="white", width=600, height=300)
-        logoFrame.place(x=200, y=150)
-        self.uname = tk.StringVar()
-        self.pas = tk.StringVar()
-        self.cat = tk.StringVar()
-        self.time = tk.StringVar()
-        self.place = tk.StringVar()
-        self.var=tk.StringVar()
-        self.addr=tk.StringVar()
-        sus=tk.Label(logoFrame, text="Please share the details of the suspect.Any information will be kept confidential amd may help during investigation", font=("times new roman", 10, "bold"),
-                         bg="light blue")
-        sus.grid(row=1, column=0)
-        category = tk.Label(logoFrame, text="suspect_name", font=("times new roman", 20, "bold"),
-                         bg="white")
-        category.grid(row=2, column=0)
-        catent = tk.Entry(logoFrame, bd=5, relief=tk.GROOVE, textvariable=self.cat, font=("", 15))
-        catent.grid(row=2, column=1)
-        username = tk.Label(logoFrame, text="id_number:",
-                         bg="white",
-                         font=("times new roman", 20, "bold"))
-        username.grid(row=3, column=0)
-        txtuser = tk.Entry(logoFrame, bd=5, relief=tk.GROOVE, textvariable=self.time, font=("", 15))
-        txtuser.grid(row=3, column=1)
-        Btn=tk.Button(logoFrame,text="ADD",bg="blue",font=("times new roman",20,"bold"),fg="white")
-        Btn.grid(row=4,columnspan=2)
-#status
 class status:
     def __init__(self, root):
         self.rootstat = tk.Toplevel(root)
@@ -786,7 +821,6 @@ class reg_police:
             'email_db':self.email_db
         })
         self.mydb.commit()
-        self.window.destroy()
         self.polobj = pol_prof(self.window)
         
 
@@ -818,12 +852,12 @@ class chose:
         self.branch = tk.Button(self.container, text="Register your branch", height=2, width=30, bg="#f56042", font=("Times New Roman", 13, "bold"), command=lambda: self.polClicked(self.rootc) )
         self.branch.place(x=250, y=150)
     def userClicked(self, root):
-        root.destroy()
+        
         global acc
         acc = "   Logout"
         self.home_again = home_page(root)
     def polClicked(self, root):
-        root.destroy()
+        
         self.ref_pol = reg_police(root)
 
 
@@ -926,7 +960,7 @@ class login_page:
         self.root2=tk.Toplevel(self.root1)
         self.root2.title("sign up")
         self.root2.geometry("1350x700+0+0")
-        self.bg=tk.PhotoImage(file=r"images/acc.png")
+        self.bg=tk.PhotoImage(file=r"images/check_bg.png")
         self.label1=tk.Label(self.root2,image=self.bg)
         self.label1.place(x=0,y=0,relwidth=1,relheight=1)
         frame2=tk.Frame(self.root2,bg="white")
@@ -1031,15 +1065,14 @@ class login_page:
                 uop = curs.fetchone()
                 if uop:
                     userid = cmpid
-                    
                     self.polobj = pol_prof(self.root1)
-                    self.root1.destroy()
+                    
                 else:
+                    userid = cmpid
                     global acc
                     acc = "   Logout"
+                    
                     self.userobj = home_page(self.root1)
-                    self.root1.destroy()
-                
 
 
         if logbool==False:
@@ -1126,7 +1159,7 @@ class home_page:
         self.accphoto =   ImageTk.PhotoImage(Image.open('images/acc.png')) 
         self.hlphoto =   ImageTk.PhotoImage(Image.open('images/hl.png')) 
 
-        self.reportbtn = tk.Button(self.frame_btn,text="   Report Crime", height=2, width=30,bg="#ede779", font=("Times New Roman",11, "bold"))
+        self.reportbtn = tk.Button(self.frame_btn,text="   Report Crime", height=2, width=30,bg="#ede779", font=("Times New Roman",11, "bold"), command=lambda: self.compform(self.root))
         self.reportbtn.place(x=40, y=80)
         self.reportbtn.config(image=self.reportphoto,compound=tk.LEFT, width=400, height=30)
 
@@ -1198,6 +1231,11 @@ class home_page:
 
         absolute = int(pct / 100.*np.sum(allvalues)) 
         return "{:.1f}%\n({:d})".format(pct, absolute)
+    def compform(self, root):
+        if userid==-1:
+            messagebox.showerror("error","Please First Login!")
+        else:
+            self.cform = complaint_form(root)
 
 
         
